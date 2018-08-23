@@ -6,7 +6,6 @@ class StarRatings extends React.Component {
   state = {
     highestStarHovered: -Infinity
   }
-  fillId = `starGrad${Math.random().toFixed(15).slice(2)}`;
 
   get starRatingsStyle() {
     const starRatingsStyle = {
@@ -55,7 +54,7 @@ class StarRatings extends React.Component {
     return `${formattedRating} ${starText}`;
   }
 
-  
+
   get offsetValue() {
     const rating = this.props.rating;
     const ratingIsInteger = Number.isInteger(rating);
@@ -95,10 +94,11 @@ class StarRatings extends React.Component {
       ignoreInlineStyles,
       svgIconPath,
       svgIconViewBox,
-      name
+      name,
+      fillId,
     } = this.props;
     const { highestStarHovered } = this.state;
-        
+
     const numberOfStarsArray = Array.apply(null, Array(numberOfStars));
 
     return numberOfStarsArray.map((_, index) => {
@@ -120,7 +120,7 @@ class StarRatings extends React.Component {
       return (
         <Star
           key={starRating}
-          fillId={this.fillId}
+          fillId={fillId}
           changeRating={changeRating ? () => changeRating(starRating, name) : null}
           hoverOverStar={changeRating ? this.hoverOverStar(starRating) : null}
           unHoverOverStar={changeRating ? this.unHoverOverStar : null}
@@ -148,9 +148,10 @@ class StarRatings extends React.Component {
   render() {
     const {
       starRatedColor,
-      starEmptyColor
+      starEmptyColor,
+      fillId
     } = this.props;
-    
+
     return (
       <div
         className="star-ratings"
@@ -162,7 +163,7 @@ class StarRatings extends React.Component {
           style={this.starGradientStyle}
         >
           <defs>
-            <linearGradient id={this.fillId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id={fillId} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" className="stop-color-first" style={this.stopColorStyle(starRatedColor)} />
               <stop offset={this.offsetValue} className="stop-color-first" style={this.stopColorStyle(starRatedColor)} />
               <stop offset={this.offsetValue} className="stop-color-final" style={this.stopColorStyle(starEmptyColor)} />
